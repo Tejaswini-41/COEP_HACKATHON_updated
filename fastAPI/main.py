@@ -1,3 +1,4 @@
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from fastapi import FastAPI, HTTPException
@@ -9,7 +10,6 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_groq import ChatGroq
-import os
 from dotenv import load_dotenv
 from azure.devops.connection import Connection
 from msrest.authentication import BasicAuthentication
@@ -154,11 +154,22 @@ async def process_repository(repo: Repository):
 
 # Endpoint to ask a question
 @app.post("/ask")
-async def ask_question(question: str):
-    if not conversation:
+# Function to handle user questions and provide custom responses
+async def custom_response_handler(user_question):
+    if "code" in user_question.lower():
+        prompt = f"Retrieve code snippets related to: {user_question}. Please return the code only, without any explanations."
+    elif "explain" in user_question.lower() or "optimize" in user_question.lower():
+        prompt = f"Explain or optimize the following code: {user_question}."
+    else:
+        prompt = f"Provide a response to: {user_question}."
+
+    # Ensure conversation is initialized
+    if conversation is None:
         raise HTTPException(status_code=400, detail="No conversation chain available. Please process a repository first.")
-    response = custom_response_handler(question)
-    return {"response": response}
+
+    response = conversation({'question': prompt})  # Call the conversation chain with the custom prompt
+    return response.get('answer', 'No response generated.')
+
 
     
 
