@@ -1,34 +1,48 @@
 // client/src/pages/Dashboard/Dashboard.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { FaGithub, FaPlus, FaSearch } from 'react-icons/fa';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const [repositories, setRepositories] = useState([
-    { id: 1, name: 'Repo 1', description: 'Codebase for frontend' },
-    { id: 2, name: 'Repo 2', description: 'Backend API repository' },
-    { id: 3, name: 'Repo 3', description: 'ML models and scripts' },
-  ]);
-
-
+  const [repositories, setRepositories] = useState([]);
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [newRepoName, setNewRepoName] = useState('');
   const [newRepoDescription, setNewRepoDescription] = useState('');
+  const [newGithubUrl, setNewGithubUrl] = useState('');
+
+  useEffect(() => {
+    // Fetch repositories on component load
+    const fetchRepositories = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/repo/all');
+        setRepositories(response.data);
+      } catch (error) {
+        console.error('Error fetching repositories:', error);
+      }
+    };
+    fetchRepositories();
+  }, []);
 
   const handleRepoClick = (repo) => {
     setSelectedRepo(repo);
   };
 
-  const handleAddRepository = () => {
-    if (newRepoName.trim() && newRepoDescription.trim()) {
-      const newRepo = {
-        id: repositories.length + 1,
-        name: newRepoName,
-        description: newRepoDescription,
-      };
-      setRepositories([...repositories, newRepo]);
-      setNewRepoName('');
-      setNewRepoDescription('');
+  const handleAddRepository = async () => {
+    if (newRepoName.trim() && newRepoDescription.trim() && newGithubUrl.trim()) {
+      try {
+        const response = await axios.post('http://localhost:3000/repo/add', {
+          githubUrl: newGithubUrl || '',
+          projectName: newRepoName,
+          repoName: newRepoDescription,
+        });
+        setRepositories([...repositories, response.data.repo]);
+        setNewRepoName('');
+        setNewRepoDescription('');
+        setNewGithubUrl('');
+      } catch (error) {
+        console.error('Error adding repository:', error);
+      }
     }
   };
 
@@ -39,7 +53,7 @@ const Dashboard = () => {
           <h2>Your Repositories</h2>
           <FaGithub className="github-icon" />
         </div>
-        
+
         <div className="search-bar">
           <FaSearch className="search-icon" />
           <input type="text" placeholder="Search repositories..." />
@@ -48,12 +62,12 @@ const Dashboard = () => {
         <div className="repo-list">
           {repositories.map((repo) => (
             <div
-              key={repo.id}
-              className={`repo-card ${selectedRepo?.id === repo.id ? 'active' : ''}`}
+              key={repo._id}
+              className={`repo-card ${selectedRepo?.id === repo._id ? 'active' : ''}`}
               onClick={() => handleRepoClick(repo)}
             >
-              <h3>{repo.name}</h3>
-              <p>{repo.description}</p>
+              <h3>{repo.projectName}</h3>
+              <p>{repo.repoName}</p>
             </div>
           ))}
         </div>
@@ -61,15 +75,21 @@ const Dashboard = () => {
         <div className="add-repo">
           <input
             type="text"
-            placeholder="Repository Name"
+            placeholder="Project Name"
             value={newRepoName}
             onChange={(e) => setNewRepoName(e.target.value)}
           />
           <input
             type="text"
-            placeholder="Repository Description"
+            placeholder="Repository Name"
             value={newRepoDescription}
             onChange={(e) => setNewRepoDescription(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="GitHub URL"
+            value={newGithubUrl}
+            onChange={(e) => setNewGithubUrl(e.target.value)}
           />
           <button onClick={handleAddRepository}>
             <FaPlus /> Add Repository
@@ -80,18 +100,13 @@ const Dashboard = () => {
       <div className="main-content">
         {selectedRepo ? (
           <div className="repo-details">
-            <div className="repo-header">
-              <h2>{selectedRepo.name}</h2>
-              <p>{selectedRepo.description}</p>
-            </div>
-            <div className="chatbot-container">
-              <h3>Chatbot Assistant</h3>
-              <div className="chat-window">
-                <p>Ask a question about {selectedRepo.name}...</p>
-                {/* Placeholder for chatbot responses */}
-              </div>
-              <input className="chat-input" placeholder="Type your query here..." />
-            </div>
+            <h2>{selectedRepo.projectName}</h2>
+            <p>{selectedRepo.repoName}</p>
+            <p>
+              <a href={selectedRepo.githubUrl} target="_blank" rel="noopener noreferrer">
+                {selectedRepo.githubUrl}
+              </a>
+            </p>
           </div>
         ) : (
           <div className="placeholder">
