@@ -1,4 +1,3 @@
-// client/src/pages/Dashboard/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaGithub, FaPlus, FaSearch } from 'react-icons/fa';
@@ -10,6 +9,9 @@ const Dashboard = () => {
   const [newRepoName, setNewRepoName] = useState('');
   const [newRepoDescription, setNewRepoDescription] = useState('');
   const [newGithubUrl, setNewGithubUrl] = useState('');
+
+  const [userQuestion, setUserQuestion] = useState('');
+const [response, setResponse] = useState('');
 
   useEffect(() => {
     // Fetch repositories on component load
@@ -24,9 +26,39 @@ const Dashboard = () => {
     fetchRepositories();
   }, []);
 
-  const handleRepoClick = (repo) => {
-    setSelectedRepo(repo);
+
+  const handleQuestionSubmit = async () => {
+    if (userQuestion.trim()) {
+      try {
+        const res = await axios.post('http://localhost:8000/ask', { question: userQuestion });
+        setResponse(res.data.response);
+      } catch (error) {
+        console.error('Error asking question:', error);
+        alert('An error occurred while asking the question.');
+      }
+    }
   };
+
+  const handleRepoClick = async (repo) => {
+    setSelectedRepo(repo);
+  
+    try {
+      const response = await axios.post('http://localhost:3000/process', {
+        project_name: repo.projectName,
+        repo_name: repo.repoName,
+      });
+  
+      if (response.status === 200) {
+        alert('Repository processed successfully!');
+      } else {
+        alert('Failed to process repository. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error processing repository:', error);
+      alert('An error occurred while processing the repository.');
+    }
+  };
+  
 
   const handleAddRepository = async () => {
     if (newRepoName.trim() && newRepoDescription.trim() && newGithubUrl.trim()) {
@@ -96,6 +128,19 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
+      <input
+  type="text"
+  placeholder="Ask a question about the repository..."
+  value={userQuestion}
+  onChange={(e) => setUserQuestion(e.target.value)}
+/>
+<button onClick={handleQuestionSubmit}>Ask</button>
+
+// Display the response from the API
+<div>
+  <h4>Response:</h4>
+        <p>{response}</p>
+        </div>
 
       <div className="main-content">
         {selectedRepo ? (
@@ -113,7 +158,7 @@ const Dashboard = () => {
             <h3>Select a repository to view details and interact with the chatbot.</h3>
           </div>
         )}
-      </div>
+      </div>w
     </div>
   );
 };

@@ -31,9 +31,7 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
-
-
-app = Flask(__name__)
+app = Flask(_name_)
 
 def get_code_from_repo(repo_name, project_name, file_types=['.py', '.js']):
     repo = git_client.get_repository(project=project_name, repository_id=repo_name)
@@ -61,7 +59,7 @@ def get_code_from_repo(repo_name, project_name, file_types=['.py', '.js']):
                 file_content = ''.join([chunk.decode('utf-8') for chunk in file_content_generator])
 
                 if file_content:
-                    code += file_content  # Append the content to the `code` string
+                    code += file_content  # Append the content to the code string
                 else:
                     print(f"No content found for file: {item.path}")  # Debug print if no content is found
     
@@ -171,5 +169,5 @@ def process_repo():
 
     return redirect(url_for('index'))
 
-if __name__ == '__main__':
+if __name__ == '_main_':
     app.run(debug=True)
