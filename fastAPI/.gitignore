@@ -10,6 +10,7 @@ yarn-error.log*
 
 # Environment variables
 .env
+venv
 
 # Production build
 dist/
@@ -20,16 +21,3 @@ build/
 .out/
 .vscode/
 .DS_Store
-
-# Temporary files
-tmp/
-temp/
-*.tmp
-
-.idea/
-.vscode/
-
-# OS specific files
-Thumbs.db
-.DS_Store
-
