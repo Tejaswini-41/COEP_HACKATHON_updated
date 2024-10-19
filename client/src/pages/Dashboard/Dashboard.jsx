@@ -13,7 +13,6 @@ const Dashboard = () => {
   const [response, setResponse] = useState('');
 
   useEffect(() => {
-    // Fetch repositories on component load
     const fetchRepositories = async () => {
       try {
         const response = await axios.get('http://localhost:3000/repo/all');
@@ -131,6 +130,7 @@ const Dashboard = () => {
       </div>
 
       <div className="main-content">
+        <h2 className="spark-title">SPARK</h2>
         <input
           type="text"
           placeholder="Ask a question about the repository..."
@@ -139,9 +139,11 @@ const Dashboard = () => {
         />
         <button onClick={handleQuestionSubmit}>Ask</button>
 
-        <div>
+        <div className="response-container">
           <h4>Response:</h4>
-          <p>{response}</p>
+          <div className="bot-response">
+            <p>{response}</p>
+          </div>
         </div>
 
         {selectedRepo ? (

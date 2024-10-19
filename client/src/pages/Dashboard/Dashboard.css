@@ -1,184 +1,185 @@
-/* Dashboard.css */
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f7ff; /* Light blue background */
-  color: #3a3a3a;
-  margin: 0;
-  padding: 0;
-}
-
 .dashboard {
   display: flex;
-  min-height: 100vh;
+  background: #f0f7ff; /* Light blue background for the entire dashboard */
+  height: 100vh;
 }
 
 .sidebar {
-  background-color: #ffffff;
-  border-right: 1px solid #d0e2ff;
-  padding: 20px;
   width: 300px;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  background: #1e3a8a; /* Darker blue for the sidebar */
+  color: #ffffff;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .sidebar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
 }
 
 .sidebar-header h2 {
-  margin: 0;
   font-size: 20px;
-  color: #4a4a7d; /* Faint blue text */
+  color: #cbd5e1; /* Lighter text for contrast */
 }
 
 .github-icon {
-  color: #4a90e2;
   font-size: 24px;
+  color: #60a5fa; /* Bright blue icon */
 }
 
 .search-bar {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 5px;
-  background-color: #e9f3ff;
-  border-radius: 5px;
+  background: #3b82f6; /* Bright blue */
+  border-radius: 8px;
+  padding: 5px 10px;
+  color: #ffffff;
 }
 
 .search-bar input {
+  background: transparent;
   border: none;
-  background: none;
+  color: #ffffff;
+  flex: 1;
+  padding-left: 10px;
   outline: none;
-  padding: 5px;
-  width: 100%;
-  font-size: 14px;
-}
-
-.search-icon {
-  margin-right: 5px;
-  color: #8aaac8; /* Light grayish blue */
 }
 
 .repo-list {
-  max-height: 400px;
+  flex: 1;
   overflow-y: auto;
   padding-right: 10px;
 }
 
 .repo-card {
-  background-color: #ffffff;
-  border: 1px solid #d0e2ff;
-  border-radius: 5px;
-  padding: 10px;
+  background: #dbeafe; /* Light blue for the card */
+  border-radius: 8px;
+  padding: 15px;
   margin-bottom: 10px;
+  transition: background 0.3s, transform 0.2s;
+  color: #1e3a8a; /* Dark text for readability */
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.repo-card.active {
-  background-color: #dfefff; /* Light blue active state */
-  border-color: #4a90e2;
 }
 
 .repo-card:hover {
-  background-color: #f0faff; /* Slightly darker hover effect */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #93c5fd; /* Slightly darker blue on hover */
+  transform: translateY(-3px);
+}
+
+.active {
+  background: #60a5fa; /* Active card color */
+  color: #ffffff;
 }
 
 .add-repo {
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .add-repo input {
-  width: calc(100% - 10px);
-  margin-bottom: 10px;
-  padding: 8px;
-  border: 1px solid #d0e2ff;
-  border-radius: 5px;
-  background-color: #f9fcff; /* Subtle blue background */
+  background: #3b82f6;
+  border: none;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  outline: none;
 }
 
 .add-repo button {
-  background-color: #4a90e2; /* Faint blue button */
+  background: #2563eb; /* Bright blue for the button */
   color: #ffffff;
   border: none;
-  padding: 8px 10px;
-  border-radius: 5px;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.3s, transform 0.2s;
   cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s ease;
 }
 
 .add-repo button:hover {
-  background-color: #357ab8; /* Slightly darker on hover */
+  background: #5b6686; /* Darker blue on hover */
+  transform: translateY(-2px);
 }
 
 .main-content {
-  flex-grow: 1;
+  flex: 1;
   padding: 20px;
+  background: #e0f2fe; /* Light blue background for main content */
+  color: #5c6784; /* Dark text */
+}
+
+.spark-title {
+  font-size: 24px;
+  color: #2563eb; /* Bright blue */
+  margin-bottom: 20px;
+}
+
+.main-content input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #93c5fd; /* Border matching the theme */
+  border-radius: 8px;
+  background: #ffffff;
+  color: #94adf0;
+}
+
+.main-content button {
+  background: #3b82f6; /* Bright blue button */
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.main-content button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+.response-container {
+  margin-top: 20px;
+  background: #dbeafe; /* Very light blue for the response area */
+  padding: 15px;
+  border-radius: 8px;
+  color: #3668f2;
+}
+
+.bot-response {
+  margin-top: 10px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #bbc9f1;
 }
 
 .repo-details {
-  background: #ffffff;
-  border: 1px solid #d0e2ff;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.repo-details h2 {
-  margin-top: 0;
-  font-size: 24px;
-  color: #4a4a7d;
+  margin-top: 20px;
+  background: #ffffff; /* White background for contrast */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .repo-details a {
-  color: #4a90e2;
-  text-decoration: none;
-}
-
-.repo-details a:hover {
+  color: #3b82f6;
   text-decoration: underline;
 }
 
 .placeholder {
-  color: #666;
   text-align: center;
+  background: #dbeafe; /* Light blue placeholder background */
   padding: 20px;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  margin-top: 10px;
-  border-radius: 5px;
-  border: 1px solid #d0e2ff;
-  background-color: #f9fcff; /* Light blue background for input */
-}
-
-button {
-  background-color: #4a90e2;
-  color: #ffffff;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #357ab8;
-}
-
-h4 {
-  margin-top: 20px;
-  color: #4a4a7d;
-}
-
-p {
-  color: #555;
+  border-radius: 8px;
 }
