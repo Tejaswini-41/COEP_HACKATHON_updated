@@ -6,7 +6,7 @@
 
 .sidebar {
   width: 300px;
-  background: #1e3a8a; /* Darker blue for the sidebar */
+  background: hsl(226, 25%, 37%);
   color: #ffffff;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@
 
 .sidebar-header h2 {
   font-size: 20px;
-  color: #cbd5e1; /* Lighter text for contrast */
+  color: #020a15; /* Lighter text for contrast */
 }
 
 .github-icon {
@@ -34,10 +34,11 @@
 .search-bar {
   display: flex;
   align-items: center;
-  background: #3b82f6; /* Bright blue */
+  background: #f9f5fa; /* Bright blue */
   border-radius: 8px;
+  border-color: #0c000e;
   padding: 5px 10px;
-  color: #ffffff;
+  color: #0b0b0b;
 }
 
 .search-bar input {
@@ -61,7 +62,7 @@
   padding: 15px;
   margin-bottom: 10px;
   transition: background 0.3s, transform 0.2s;
-  color: #1e3a8a; /* Dark text for readability */
+  color: #0c000e; /* Dark text for readability */
   cursor: pointer;
 }
 
@@ -70,10 +71,7 @@
   transform: translateY(-3px);
 }
 
-.active {
-  background: #60a5fa; /* Active card color */
-  color: #ffffff;
-}
+
 
 .add-repo {
   display: flex;
@@ -82,16 +80,16 @@
 }
 
 .add-repo input {
-  background: #3b82f6;
+  background: #e0e4e9;
   border: none;
-  color: #ffffff;
+  color: #100f0f;
   padding: 10px;
   border-radius: 8px;
   outline: none;
 }
 
 .add-repo button {
-  background: #2563eb; /* Bright blue for the button */
+  background: #2563eb; 
   color: #ffffff;
   border: none;
   padding: 10px;
@@ -105,7 +103,7 @@
 }
 
 .add-repo button:hover {
-  background: #5b6686; /* Darker blue on hover */
+  background: #0742f2; /* Darker blue on hover */
   transform: translateY(-2px);
 }
 
@@ -113,7 +111,7 @@
   flex: 1;
   padding: 20px;
   background: #e0f2fe; /* Light blue background for main content */
-  color: #5c6784; /* Dark text */
+  color: #7b845c; /* Dark text */
 }
 
 .spark-title {
@@ -129,7 +127,7 @@
   border: 1px solid #93c5fd; /* Border matching the theme */
   border-radius: 8px;
   background: #ffffff;
-  color: #94adf0;
+  color: #101011;
 }
 
 .main-content button {
@@ -166,10 +164,10 @@
 
 .repo-details {
   margin-top: 20px;
-  background: #ffffff; /* White background for contrast */
+  background: #ffffff; 
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.944);
 }
 
 .repo-details a {
@@ -177,9 +175,14 @@
   text-decoration: underline;
 }
 
+.question-section {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .placeholder {
   text-align: center;
-  background: #dbeafe; /* Light blue placeholder background */
+  background: #dbeafe; 
   padding: 20px;
   border-radius: 8px;
 }
