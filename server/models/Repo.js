@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const repoSchema = new mongoose.Schema({
   githubUrl: {
     type: String,
+    required: true,
   },
   projectName: {
     type: String,

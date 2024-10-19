@@ -1,5 +1,4 @@
-// server/controller/repoController.js
-import Repo from '../models/repo.js';
+import Repo from '../models/Repo.js';
 
 // Add a new repository
 export const addRepo = async (req, res) => {

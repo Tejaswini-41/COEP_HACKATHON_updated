@@ -1,40 +1,57 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Chatbot.css';  // Optional: CSS for styling
 
 const Chatbot = () => {
-    const [question, setQuestion] = useState('');
-    const [response, setResponse] = useState('');
+  const [userInput, setUserInput] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
 
-    const handleQuestionSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const res = await axios.post('http://localhost:8000/ask', {
-                question: question,
-            });
-            setResponse(res.data.response);
-        } catch (error) {
-            console.error('Error asking question:', error);
-        }
-    };
+  // Handler for user input
+  const handleUserInput = async () => {
+    if (!userInput.trim()) return;
 
-    return (
-        <div>
-            <form onSubmit={handleQuestionSubmit}>
-                <input
-                    type="text"
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    placeholder="Ask a question..."
-                    required
-                />
-                <button type="submit">Submit</button>
-            </form>
-            <div>
-                <h2>Response:</h2>
-                <p>{response}</p>
-            </div>
-        </div>
-    );
+    const newMessage = { sender: 'user', text: userInput };
+    setChatHistory((prevHistory) => [...prevHistory, newMessage]);
+
+    try {
+      // Call the FastAPI ask endpoint
+      const response = await axios.post('http://localhost:8000/ask', {
+        user_question: userInput,
+      });
+
+      // Append the response to the chat history
+      const botMessage = { sender: 'bot', text: response.data };
+      setChatHistory((prevHistory) => [...prevHistory, botMessage]);
+    } catch (error) {
+      console.error('Error fetching bot response:', error);
+      const errorMessage = { sender: 'bot', text: 'Error processing your request.' };
+      setChatHistory((prevHistory) => [...prevHistory, errorMessage]);
+    }
+
+    // Clear the input field
+    setUserInput('');
+  };
+
+  return (
+    <div className="chatbot-container">
+      <div className="chat-window">
+        {chatHistory.map((message, index) => (
+          <div key={index} className={`chat-message ${message.sender}`}>
+            {message.text}
+          </div>
+        ))}
+      </div>
+      <div className="chat-input">
+        <input
+          type="text"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          placeholder="Type your message..."
+        />
+        <button onClick={handleUserInput}>Send</button>
+      </div>
+    </div>
+  );
 };
 
 export default Chatbot;
